@@ -1,1 +1,18 @@
-Pruebas unitarias para multiplicacion y suma.
+HECHAS:
+*Suma
+*Producto
+
+
+
+FALTANTES (Por ahora):
+*Prueba unitaria para suma
+*Prueba unitaria para producto
+*Generacion del hashcode
+*Equals
+*ToString
+*Eliminacion Gauss-Jordan
+*Inversa de una matriz por metodo Gauss-Jordan
+*Generacion de cuadrados magicos(Tamaño impar)
+*Calcular el determinante de una matriz cuadrada
+*Calcular potencias de una matriz cuadrada: A^k, k e N
+--etc--
