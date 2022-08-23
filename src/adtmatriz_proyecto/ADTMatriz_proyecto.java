@@ -31,24 +31,41 @@ public class ADTMatriz_proyecto implements Matriz{
     @Override
     public ADTMatriz_proyecto suma(Matriz matriz2) throws Exception {
         if(!(this.filas == matriz2.getFilas() && this.columnas == matriz2.getColumnas())){
-            throw new Exception("The size of both matrix should be equals, Openenglish");
+            throw new Exception("El tamaño de ambas matrices debe ser igual");
         }
         if(!(matriz2 instanceof Matriz)){
-            throw new Exception("The object isn't a matrix type");
+            throw new Exception("El objeto no es un ADTMatriz");
         }
         ADTMatriz_proyecto resultado = new ADTMatriz_proyecto(filas,columnas);
         for (byte b = 0; b < filas; b++) {
             for (byte c = 0; c < columnas; c++) {
-                resultado.matriz[b][c] = (this.getMatriz()[b][c]+matriz2.[b][c]);
+                resultado.matriz[b][c] = (this.matriz[b][c]+matriz2.getMatriz()[b][c]);
             }
         }
         return resultado;
     }
 
     @Override
-    public ADTMatriz_proyecto producto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ADTMatriz_proyecto producto(Matriz matriz2) throws Exception {
+        if(!(this.columnas == matriz2.getFilas())){
+            throw new Exception("El numero de columnas de la primera matriz debe ser igual al numero de filas de la segunda matriz");
+        }
+        if(!(matriz2 instanceof Matriz)){
+            throw new Exception("El objeto no es un ADTMatriz");
+        }
+        ADTMatriz_proyecto resultado = new ADTMatriz_proyecto(filas,matriz2.getColumnas());
+        int suma=0;
+        for (byte b = 0; b < filas; b++) {
+            for (byte c = 0; c < matriz2.getColumnas(); c++) {
+                for (byte d = 0; d < columnas; d++) {
+                    suma += matriz[b][d]*matriz2.getMatriz()[d][c];
+                }
+                resultado.matriz[b][c] = suma;
+            }
+        }
+        return resultado;
     }
+    
 
     @Override
     public int hashIDs() {
@@ -64,22 +81,19 @@ public class ADTMatriz_proyecto implements Matriz{
     public int getColumnas() {
         return columnas;
     }
-    
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
 
     @Override
     public void setMatriz(int[][] matriz) {
         this.matriz = matriz;
     }
 
-    /**
-     * @return the matriz
-     */
+    @Override
     public int[][] getMatriz() {
         return matriz;
     }
     
+    public static void main(String[] args) {
+        
+    }
     
 }

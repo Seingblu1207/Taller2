@@ -4,7 +4,7 @@ public interface Matriz{
     
     ADTMatriz_proyecto suma(Matriz matriz) throws Exception;
     
-    ADTMatriz_proyecto producto();
+    ADTMatriz_proyecto producto(Matriz matriz) throws Exception;
 
     int hashIDs();
     
