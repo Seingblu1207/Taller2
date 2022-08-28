@@ -11,15 +11,17 @@ public class ADTMatriz_proyecto implements Matriz{
     
     private int filas;
     private int columnas; 
-    private int[][] matriz = new int[filas][columnas];
+    private double[][] matriz;
     
     public ADTMatriz_proyecto(int filas, int columnas){
         this.filas = filas;
         this.columnas = columnas;
+        matriz = new double[filas][columnas];
+        llenar_matriz();
     }
     
-    public void llenar_matriz(){
-        int max = 20, min = 0, range = max-min+1;
+    private void llenar_matriz(){
+        int max = 10, min = 0, range = max-min+1;
         for (byte b = 0; b < getFilas(); b++) {
             for (byte c = 0; c < getColumnas(); c++) {
                 matriz[b][c] = (int)(Math.random()*range)+min;
@@ -27,6 +29,36 @@ public class ADTMatriz_proyecto implements Matriz{
         }
     }
     
+    public boolean equals(Object matriz){
+        if(!(matriz instanceof Matriz))
+            return false;
+        if(!(filas == ((Matriz)matriz).getFilas() && columnas == ((Matriz)matriz).getColumnas()))
+            return false;
+        for (byte b = 0; b < filas; b++) {
+            for (byte c = 0; c < columnas; c++) {
+                if(!(this.matriz[b][c] == ((Matriz)matriz).getMatriz()[b][c])){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    public String toString(){
+        String retorno = "";
+        for (byte b = 0; b < filas; b++) {
+//            if(b==0)
+//                retorno += "[";
+            for (byte c = 0; c < columnas; c++) {
+                if(b == filas-1 && c == columnas-1)
+                    retorno += matriz[b][c];
+                else
+                    retorno += matriz[b][c]+", ";
+            }
+            retorno += "\n"; 
+        }
+        return retorno;
+    }
     
     @Override
     public ADTMatriz_proyecto suma(Matriz matriz2) throws Exception {
@@ -66,10 +98,30 @@ public class ADTMatriz_proyecto implements Matriz{
         return resultado;
     }
     
-
+    @Override
+    public ADTMatriz_proyecto Eliminacion_Gausiana() throws Exception{
+        /*
+        Metodo compatible solo con funciones AxA.
+        Se supondra que los valores estan ordenados, ej:
+        a0X0, b0X1, c0X2 = d0     [a0 b0 c0 d0
+        a1X0, b1X1, c1X2 = d1 -->  a1 b1 c1 d1
+        a2X0, b2X1, c2X2 = d2      a2 b2 c2 d2]
+        */
+        if(!(filas >=2 && columnas>=2))
+            throw new Exception("La matriz debe ser mayor o igual a 2x2");
+        double[][] resultado = this.getMatriz();
+        //int[] resultados = new int[columnas];
+        byte pivot = 0;
+        
+        ADTMatriz_proyecto r = new ADTMatriz_proyecto(filas,columnas);
+        r.setMatriz(resultado);
+        return r;
+    }
+    
     @Override
     public int hashIDs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String ID = "454176";
+        return ID.hashCode()%5;
     }
     
     @Override
@@ -81,19 +133,31 @@ public class ADTMatriz_proyecto implements Matriz{
     public int getColumnas() {
         return columnas;
     }
-
+    
     @Override
-    public void setMatriz(int[][] matriz) {
+    public void setMatriz(double[][] matriz) {
         this.matriz = matriz;
     }
 
     @Override
-    public int[][] getMatriz() {
+    public double[][] getMatriz() {
         return matriz;
     }
     
     public static void main(String[] args) {
-        
+        try {
+            
+            Matriz m = new ADTMatriz_proyecto(3,3);
+            System.out.println(m.hashIDs());
+            Matriz n = new ADTMatriz_proyecto(3,3);
+            System.out.println(m.toString());
+//            System.out.println(n.toString());
+//            System.out.println((m.suma(n)).toString());
+            System.out.println(m.Eliminacion_Gausiana().toString());
+        }
+        catch (Exception Error) {
+            System.out.println("Se presento un error: \n" + Error);
+        }
     }
     
 }
