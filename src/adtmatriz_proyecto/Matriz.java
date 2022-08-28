@@ -6,7 +6,7 @@ public interface Matriz{
     
     ADTMatriz_proyecto producto(Matriz matriz) throws Exception;
     
-    ADTMatriz_proyecto Eliminacion_Gausiana() throws Exception;
+    ADTMatriz_proyecto Potencia(double k) throws Exception;
 
     int hashIDs();
     
@@ -14,8 +14,8 @@ public interface Matriz{
 
     int getColumnas();
     
-    public void setMatriz(double[][] matriz);
+    public void setMatriz(int[][] matriz);
     
-    public double[][] getMatriz();
+    public int[][] getMatriz();
     
 }

@@ -11,12 +11,12 @@ public class ADTMatriz_proyecto implements Matriz{
     
     private int filas;
     private int columnas; 
-    private double[][] matriz;
+    private int[][] matriz;
     
     public ADTMatriz_proyecto(int filas, int columnas){
         this.filas = filas;
         this.columnas = columnas;
-        matriz = new double[filas][columnas];
+        matriz = new int[filas][columnas];
         llenar_matriz();
     }
     
@@ -99,23 +99,23 @@ public class ADTMatriz_proyecto implements Matriz{
     }
     
     @Override
-    public ADTMatriz_proyecto Eliminacion_Gausiana() throws Exception{
-        /*
-        Metodo compatible solo con funciones AxA.
-        Se supondra que los valores estan ordenados, ej:
-        a0X0, b0X1, c0X2 = d0     [a0 b0 c0 d0
-        a1X0, b1X1, c1X2 = d1 -->  a1 b1 c1 d1
-        a2X0, b2X1, c2X2 = d2      a2 b2 c2 d2]
-        */
-        if(!(filas >=2 && columnas>=2))
-            throw new Exception("La matriz debe ser mayor o igual a 2x2");
-        double[][] resultado = this.getMatriz();
-        //int[] resultados = new int[columnas];
-        byte pivot = 0;
-        
-        ADTMatriz_proyecto r = new ADTMatriz_proyecto(filas,columnas);
-        r.setMatriz(resultado);
-        return r;
+    public ADTMatriz_proyecto Potencia(double k) throws Exception{
+        if(filas != columnas)
+            throw new Exception("La matriz debe ser cuadrada");
+        if(!(filas > 1))
+            throw new Exception("La matriz debe ser almenos de 2x2");
+        if(!(k>=0))
+            throw new Exception("La potencia debe ser un numero natural");
+        if(k==1)
+            return this;
+        ADTMatriz_proyecto resultado;
+        resultado = this.producto(this);
+        if(k==2)
+            return resultado;
+        for (byte b = 2; b < k; b++) {
+            resultado = resultado.producto(this);
+        }
+        return resultado;
     }
     
     @Override
@@ -135,12 +135,12 @@ public class ADTMatriz_proyecto implements Matriz{
     }
     
     @Override
-    public void setMatriz(double[][] matriz) {
+    public void setMatriz(int[][] matriz) {
         this.matriz = matriz;
     }
 
     @Override
-    public double[][] getMatriz() {
+    public int[][] getMatriz() {
         return matriz;
     }
     
@@ -151,9 +151,9 @@ public class ADTMatriz_proyecto implements Matriz{
             System.out.println(m.hashIDs());
             Matriz n = new ADTMatriz_proyecto(3,3);
             System.out.println(m.toString());
-//            System.out.println(n.toString());
-//            System.out.println((m.suma(n)).toString());
-            System.out.println(m.Eliminacion_Gausiana().toString());
+            System.out.println(n.toString());
+            System.out.println((m.suma(n)).toString());
+            System.out.println(m.Potencia(3).toString());
         }
         catch (Exception Error) {
             System.out.println("Se presento un error: \n" + Error);
