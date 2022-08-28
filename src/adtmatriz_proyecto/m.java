@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package adtmatriz_proyecto;
-import adtmatriz_proyecto.ADTMatriz_proyecto;
+import adtmatriz_proyecto.ImplementacionMatriz;
 
 public class m {
     public static void main(String[] args) {
         try {
             
-            Matriz m = new ADTMatriz_proyecto(6,6);
+            Matriz m = new ImplementacionMatriz(6,6);
             System.out.println(m.hashIDs());
             
             

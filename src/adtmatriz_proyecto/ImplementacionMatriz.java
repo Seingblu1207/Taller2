@@ -7,13 +7,13 @@ package adtmatriz_proyecto;
 
 import java.lang.Math;
 
-public class ADTMatriz_proyecto implements Matriz{
+public class ImplementacionMatriz implements Matriz{
     
     private int filas;
     private int columnas; 
     private int[][] matriz;
     
-    public ADTMatriz_proyecto(int filas, int columnas){
+    public ImplementacionMatriz(int filas, int columnas){
         this.filas = filas;
         this.columnas = columnas;
         matriz = new int[filas][columnas];
@@ -61,14 +61,14 @@ public class ADTMatriz_proyecto implements Matriz{
     }
     
     @Override
-    public ADTMatriz_proyecto suma(Matriz matriz2) throws Exception {
+    public ImplementacionMatriz Suma(Matriz matriz2) throws Exception {
         if(!(this.filas == matriz2.getFilas() && this.columnas == matriz2.getColumnas())){
             throw new Exception("El tamaño de ambas matrices debe ser igual");
         }
         if(!(matriz2 instanceof Matriz)){
             throw new Exception("El objeto no es un ADTMatriz");
         }
-        ADTMatriz_proyecto resultado = new ADTMatriz_proyecto(filas,columnas);
+        ImplementacionMatriz resultado = new ImplementacionMatriz(filas,columnas);
         for (byte b = 0; b < filas; b++) {
             for (byte c = 0; c < columnas; c++) {
                 resultado.matriz[b][c] = (this.matriz[b][c]+matriz2.getMatriz()[b][c]);
@@ -78,17 +78,17 @@ public class ADTMatriz_proyecto implements Matriz{
     }
 
     @Override
-    public ADTMatriz_proyecto producto(Matriz matriz2) throws Exception {
+    public ImplementacionMatriz Producto(Matriz matriz2) throws Exception {
         if(!(this.columnas == matriz2.getFilas())){
             throw new Exception("El numero de columnas de la primera matriz debe ser igual al numero de filas de la segunda matriz");
         }
         if(!(matriz2 instanceof Matriz)){
             throw new Exception("El objeto no es un ADTMatriz");
         }
-        ADTMatriz_proyecto resultado = new ADTMatriz_proyecto(filas,matriz2.getColumnas());
-        int suma=0;
+        ImplementacionMatriz resultado = new ImplementacionMatriz(filas,matriz2.getColumnas());
         for (byte b = 0; b < filas; b++) {
             for (byte c = 0; c < matriz2.getColumnas(); c++) {
+                int suma=0;
                 for (byte d = 0; d < columnas; d++) {
                     suma += matriz[b][d]*matriz2.getMatriz()[d][c];
                 }
@@ -99,7 +99,7 @@ public class ADTMatriz_proyecto implements Matriz{
     }
     
     @Override
-    public ADTMatriz_proyecto Potencia(double k) throws Exception{
+    public ImplementacionMatriz Potencia(double k) throws Exception{
         if(filas != columnas)
             throw new Exception("La matriz debe ser cuadrada");
         if(!(filas > 1))
@@ -108,12 +108,12 @@ public class ADTMatriz_proyecto implements Matriz{
             throw new Exception("La potencia debe ser un numero natural");
         if(k==1)
             return this;
-        ADTMatriz_proyecto resultado;
-        resultado = this.producto(this);
+        ImplementacionMatriz resultado;
+        resultado = this.Producto(this);
         if(k==2)
             return resultado;
         for (byte b = 2; b < k; b++) {
-            resultado = resultado.producto(this);
+            resultado = resultado.Producto(this);
         }
         return resultado;
     }
@@ -147,13 +147,15 @@ public class ADTMatriz_proyecto implements Matriz{
     public static void main(String[] args) {
         try {
             
-            Matriz m = new ADTMatriz_proyecto(3,3);
+            Matriz m = new ImplementacionMatriz(3,3);
             System.out.println(m.hashIDs());
-            Matriz n = new ADTMatriz_proyecto(3,3);
-            System.out.println(m.toString());
-            System.out.println(n.toString());
-            System.out.println((m.suma(n)).toString());
-            System.out.println(m.Potencia(3).toString());
+            Matriz n = new ImplementacionMatriz(3,3);
+            System.out.println(m);
+            System.out.println(n);
+//            System.out.println(m.producto(n));
+//            System.out.println((m.suma(n)).toString());
+//            System.out.println(m.Potencia(0).toString());
+            assert(m.Potencia(2)==m.Producto(n));
         }
         catch (Exception Error) {
             System.out.println("Se presento un error: \n" + Error);
