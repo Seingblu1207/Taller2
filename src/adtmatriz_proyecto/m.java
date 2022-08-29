@@ -9,7 +9,7 @@ import adtmatriz_proyecto.ImplementacionMatriz;
 public class m {
     public static void main(String[] args) {
         try {
-            
+            System.out.println("b");
             Matriz m = new ImplementacionMatriz(6,6);
             System.out.println(m.hashIDs());
             

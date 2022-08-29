@@ -7,6 +7,10 @@ public interface Matriz{
     ImplementacionMatriz Producto(Matriz matriz) throws Exception;
     
     ImplementacionMatriz Potencia(double k) throws Exception;
+    
+    String toString();
+    
+    boolean equals(Matriz matriz) throws Exception;
 
     int hashIDs();
     

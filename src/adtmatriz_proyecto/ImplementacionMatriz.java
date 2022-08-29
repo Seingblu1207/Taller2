@@ -5,7 +5,8 @@
  */
 package adtmatriz_proyecto;
 
-import java.lang.Math;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class ImplementacionMatriz implements Matriz{
     
@@ -28,8 +29,33 @@ public class ImplementacionMatriz implements Matriz{
             }
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + this.filas;
+        hash = 59 * hash + this.columnas;
+        hash = 59 * hash + Arrays.deepHashCode(this.matriz);
+        return hash;
+    }
     
-    public boolean equals(Object matriz){
+    @Override
+    public String toString() {
+        String retorno = "";
+        for (byte b = 0; b < filas; b++) {
+            for (byte c = 0; c < columnas; c++) {
+                if(b == filas-1 && c == columnas-1)
+                    retorno += matriz[b][c];
+                else
+                    retorno += matriz[b][c]+", ";
+            }
+            retorno += "\n"; 
+        }
+        return retorno;
+    }
+    
+    @Override
+    public boolean equals(Matriz matriz) throws Exception{
         if(!(matriz instanceof Matriz))
             return false;
         if(!(filas == ((Matriz)matriz).getFilas() && columnas == ((Matriz)matriz).getColumnas()))
@@ -42,22 +68,6 @@ public class ImplementacionMatriz implements Matriz{
             }
         }
         return true;
-    }
-    
-    public String toString(){
-        String retorno = "";
-        for (byte b = 0; b < filas; b++) {
-//            if(b==0)
-//                retorno += "[";
-            for (byte c = 0; c < columnas; c++) {
-                if(b == filas-1 && c == columnas-1)
-                    retorno += matriz[b][c];
-                else
-                    retorno += matriz[b][c]+", ";
-            }
-            retorno += "\n"; 
-        }
-        return retorno;
     }
     
     @Override
@@ -136,6 +146,8 @@ public class ImplementacionMatriz implements Matriz{
     
     @Override
     public void setMatriz(int[][] matriz) {
+        int filas = matriz.length;
+        int columnas = matriz.length;
         this.matriz = matriz;
     }
 
@@ -147,15 +159,63 @@ public class ImplementacionMatriz implements Matriz{
     public static void main(String[] args) {
         try {
             
+            System.out.println("a");
             Matriz m = new ImplementacionMatriz(3,3);
-            System.out.println(m.hashIDs());
+            System.out.println(m.hashIDs()+"\n");
             Matriz n = new ImplementacionMatriz(3,3);
-            System.out.println(m);
-            System.out.println(n);
-//            System.out.println(m.producto(n));
-//            System.out.println((m.suma(n)).toString());
-//            System.out.println(m.Potencia(0).toString());
-            assert(m.Potencia(2)==m.Producto(n));
+            boolean apoyo;
+// equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - equals - - - 
+            
+            //CAMBIO POR VARIABLES IGUALES
+            int [][] matriz1 = {{1,1,1},{2,2,2},{3,3,3}};
+            int [][] matriz2 = {{1,1,1},{2,2,2},{3,3,3}};
+            
+            //asignar
+            m.setMatriz(matriz1);
+            n.setMatriz(matriz2);
+            
+            //debe dar true
+            apoyo = m.equals(n);
+            assert apoyo == true;
+            
+            //CAMBIO DE N POR DIFERENTE
+            int [][] matriz3 = {{1,1,1},{2,2,2},{9,9,9}};
+            n.setMatriz(matriz3);
+            
+            //debe dar false
+            apoyo = m.equals(n);
+            assert (apoyo == false);
+            
+//producto y potencia - - - producto y potencia - - - producto y potencia - - - producto y potencia - - - producto y potencia - - - producto y potencia - - - 
+            
+            //CAMBIO DE M Y N PARA OPERACIONES DE PRODUCTO Y POTENCIA
+            int [][] matriz4 = {{1,1,1},{2,2,2},{3,3,3}};
+            int [][] matriz5 = {{11,4,2},{3,8,14},{28,4,12}};
+            
+            m.setMatriz(matriz4);
+            n.setMatriz(matriz5);
+            
+            Matriz mApoyo = new ImplementacionMatriz(3,3);
+            
+            mApoyo = n.Producto(n);
+            assert (mApoyo.equals(n.Potencia(2)) == true);
+            
+// SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - SUMA - - - 
+            
+            m.setMatriz(matriz1);
+            n.setMatriz(matriz2);
+            
+            mApoyo =  m.Suma(n);
+            int [][] iApoyo = mApoyo.getMatriz();
+            assert iApoyo[2][2] == 4;
+            
+            
+// toString - - - toString - - - toString - - - toString - - - toString - - - toString - - - toString - - - toString - - - toString - - - toString - - - toString - - - 
+            
+            int [][] matriz6 = {{11,4,2}};
+            m.setMatriz(matriz6);
+            assert (m.toString() == "11,4,2");
+
         }
         catch (Exception Error) {
             System.out.println("Se presento un error: \n" + Error);
